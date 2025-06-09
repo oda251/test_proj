@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   update-v2-branch:
     runs-on: ubuntu-latest
@@ -13,6 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Configure Git
@@ -35,8 +39,8 @@ jobs:
             fi
             echo "✅ Merge completed successfully"
           else
-            echo "v2 branch does not exist, creating it"
-            git checkout -b v2
+            echo "❌ v2 branch does not exist!"
+            exit 1
           fi
 
       - name: Push v2 branch
