@@ -1,0 +1,44 @@
+name: Auto Update v2 Branch on Main Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-v2-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Create or update v2 branch
+        run: |
+          # v2ブランチが存在するかチェック
+          if git show-ref --verify --quiet refs/remotes/origin/v2; then
+            echo "v2 branch exists, updating it"
+            git checkout -b v2 origin/v2
+            
+            # マージを実行し、コンフリクトをチェック
+            if ! git merge main --no-edit; then
+              echo "❌ Merge conflict detected! Workflow stopped."
+              echo "Please resolve conflicts manually and try again."
+              exit 1
+            fi
+            echo "✅ Merge completed successfully"
+          else
+            echo "v2 branch does not exist, creating it"
+            git checkout -b v2
+          fi
+
+      - name: Push v2 branch
+        run: |
+          git push origin v2
