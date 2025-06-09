@@ -24,7 +24,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-      - name: Create or update v2 branch
+      - name: Update v2 branch
         run: |
           # v2ブランチが存在するかチェック
           if git show-ref --verify --quiet refs/remotes/origin/v2; then
