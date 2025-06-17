@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/shared/share_receive_app.dart';
 import 'shared/flex_popup_menu_button.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
@@ -81,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            ShareReceiveApp(),
             a(context),
             buildPopupMenuItem(context),
             const Text('タップしてポップアップメニューを表示：'),
