@@ -1,10 +1,10 @@
-part 'user_controller.g.dart';
+import '../model/user.dart';
 
-@riverpod
-class UserController extends _$UserController {
-  @override
-  User build() {
-    // 初期値を設定
-    return User(
-      id: 0,
-      username: 'guest
+class UserController {
+  static User get defaultUser => const User(
+    id: 0,
+    username: 'guest',
+    email: 'guest@example.com',
+    phone: '000-0000-0000',
+  );
+}
